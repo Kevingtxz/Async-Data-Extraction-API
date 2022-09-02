@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  backend:
+    container_name: "server"
+    build: .
+    command: "npm run dev:server"
+    ports:
+      - "5000:5000"
+    environment:
+      REDIS_HOST: "redis"
+      REDIS_PORT: 6379
+      DB_HOST: "db"
+      DB_PORT: 3306
+      DB_USERNAME: "flyon"
+      DB_PASSWORD: "secret"
+      DB_DATABASE: "flyondb"
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+  db:
+    container_name: "db"
+    image: mariadb:10.6.4-focal
+    command: "--default-authentication-plugin=mysql_native_password"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/storage/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "secret"
+      MYSQL_ROOT: "localhost"
+      MYSQL_DATABASE: "flyondb"
+      MYSQL_USER: "flyon"
+      MYSQL_PASSWORD: "secret"
+    restart: unless-stopped
+  redis:
+    container_name: "redis"
+    image: redis:alpine
+    volumes:
+      - ./docker/storage/redis:/data
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PORT: 6379
+    restart: unless-stopped
