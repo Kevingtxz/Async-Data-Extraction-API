@@ -1,4 +1,4 @@
-<h1 align="center">NodeJS Process Queue</h1>
+<h1 align="center">Async Data Extraction API</h1>
 
 <div align="center">
 <a href="#description">Description</a>
