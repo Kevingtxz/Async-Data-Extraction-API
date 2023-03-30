@@ -1,4 +1,4 @@
-<h1 align="center">Test NodeJS FlyOn</h1>
+<h1 align="center">NodeJS Process Queue</h1>
 
 <div align="center">
 <a href="#description">Description</a>
